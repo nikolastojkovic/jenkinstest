@@ -12,7 +12,7 @@ def deployAppAlways() {
 def deployApp() {
     // sh "helmfile -e dbh-v1-dev destroy"
     echo "helmfile -e dbh-v1-dev apply"
-    echo "16:50"
+    echo "17:17"
     echo "deploying version ${params.VERSION}"
 } 
 
