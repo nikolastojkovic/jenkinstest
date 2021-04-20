@@ -27,7 +27,7 @@ pipeline {
         stage("Helmfile rollAlways") {
             when {
                 expression {
-                    params.rollAlways == true
+                    params.rollAlways === true
                 }
             }
             steps {
@@ -39,7 +39,7 @@ pipeline {
         stage("Helmfile deployment") {
             when {
                 expression {
-                    params.rollAlways == false
+                    params.rollAlways === false
                 }
             }
             steps {
