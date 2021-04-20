@@ -18,16 +18,16 @@ pipeline {
                         params.rollAlways == true
                     }
                 }
-                    steps { container(name: 'helm') { script {
+                    steps { script {
                     echo "helmfile -e dbh-v1-dev destroy"
                     echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-                    } }                    
+                     }                    
                 }
         }
-        stage('Helmfile deployment') { steps { container(name: 'helm') { script {
+        stage('Helmfile deployment') { steps {  script {
             echo "helmfile -e dbh-v1-dev destroy"
             echo "helmfile -e dbh-v1-dev apply"
-        } } } }
+        } } }
     }
     // stages {
     //     stage("init") {
