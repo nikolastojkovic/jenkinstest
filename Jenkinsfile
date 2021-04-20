@@ -4,7 +4,7 @@ pipeline {
     agent any
     triggers {
         // cron('*/2 * * * 1-5') //each 2min
-        cron('48 17 * * *') 
+        cron('50 17 * * *') 
     }
     parameters {
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
@@ -27,7 +27,7 @@ pipeline {
         stage('Helmfile deployment') { steps { container(name: 'helm') { script {
             echo "helmfile -e dbh-v1-dev destroy"
             echo "helmfile -e dbh-v1-dev apply"
-        } } } }        
+        } } } }
     }
     // stages {
     //     stage("init") {
