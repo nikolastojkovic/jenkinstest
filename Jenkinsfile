@@ -3,11 +3,12 @@ def gv
 pipeline {
     agent any
     triggers {
-        cron('*/2 * * * 1-5') //eash 
-        // cron('50 16 * * 1-5') 
+        // cron('*/2 * * * 1-5') //each 2min
+        cron('40 17 * * 1-5') 
     }
     parameters {
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+        // if true - always pull the latest docker image
         booleanParam(name: 'rollAlways', defaultValue: false, description: '')
     }
     stages {
