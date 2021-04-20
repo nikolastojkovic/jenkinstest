@@ -3,7 +3,7 @@ def gv
 pipeline {
     agent any
     triggers {
-        cron('42 16 * * 1-5') 
+        cron('50 16 * * 1-5') 
     }
     parameters {
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
@@ -24,31 +24,30 @@ pipeline {
                 }
             }
         }
-        stage("test") {
-            steps {
-                script {
-                    gv.testApp()
-                }
-            }
-        }
-        stage("Helmfile deployment") {
-            if {
+        stage("Helmfile rollAlways") {
+            when {
                 expression {
                     params.rollAlways == true
                 }
-                steps {
+            }
+            steps {
                 script {
                     gv.deployAppAlways()
                 }
             }
+        }
+        stage("Helmfile deployment") {
+            when {
+                expression {
+                    params.rollAlways == false
+                }
             }
-            else {
-                steps {
+            steps {
                 script {
                     gv.deployApp()
                 }
             }
-            
         }
+        
     }   
 }
