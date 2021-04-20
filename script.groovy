@@ -7,7 +7,8 @@ def testApp() {
 } 
 
 def deployApp() {
-    echo 'deploying the application...'
+    // sh "helmfile -e dbh-v1-dev destroy"
+    echo "helmfile -e dzoni --wait --set deployment.rollAlways=true apply"
     echo "deploying version ${params.VERSION}"
 } 
 
