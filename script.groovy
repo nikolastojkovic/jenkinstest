@@ -9,7 +9,7 @@ def testApp() {
 def deployApp() {
     // sh "helmfile -e dbh-v1-dev destroy"
     echo "helmfile -e dzoni --wait --set deployment.rollAlways=true apply"
-    echo "16:05"
+    echo "16:23"
     echo "deploying version ${params.VERSION}"
 } 
 
