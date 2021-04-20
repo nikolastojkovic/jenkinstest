@@ -5,7 +5,7 @@ def buildApp() {
 def deployAppAlways() {
     // sh "helmfile -e dbh-v1-dev destroy"
     echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-    echo "16:50"
+    echo "17:40"
     echo "deploying version ${params.VERSION}"
 }
 
