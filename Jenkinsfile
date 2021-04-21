@@ -14,32 +14,28 @@ pipeline {
         booleanParam(name: 'rollAlways', defaultValue: false, description: 'Pull the latest Docker image')
     }
     stages {
-        stage("Helmfile deployment rollAlways") {
-                when {
-                    branch 'main'
-                    expression {
-                        params.rollAlways == true
-                    }
-                }
-                    steps { script {
-                        echo "helmfile -e dbh-v1-dev destroy"
-                        echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-                        echo "branch test"
-                    }                    
-                }
-        }
-        stage('Helmfile deployment') { 
+        stage('Helmfile deployment rollAlways') {
             when {
-                    branch 'main'
-                    expression {
-                        params.rollAlways == false
-                    }
+                expression {
+                    params.rollAlways == true
                 }
-                    steps {  script {
-                        echo "branch test"
-                        echo "helmfile -e dbh-v1-dev destroy"
-                        echo "helmfile -e dbh-v1-dev apply"
-        } } }
+            }
+            steps { container(name: 'helm') { script {
+                echo "helmfile -e dbh-v1-dev destroy"
+                echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
+            }}}
+        }
+        stage('Helmfile deployment') {
+            when {
+                expression {
+                    params.rollAlways == false
+                }
+            }
+            steps { container(name: 'helm') { script {
+                echo "helmfile -e dbh-v1-dev destroy"
+                echo "helmfile -e dbh-v1-dev apply"
+            }}}
+        }
     }
     // stages {
     //     stage("init") {
