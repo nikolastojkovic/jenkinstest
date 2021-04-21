@@ -6,7 +6,7 @@ pipeline {
         // cron('*/2 * * * 1-5') //each 2min each workday
         // cron('H 10-12/1 * * 1-5')
         // pollSCM('*/2 * * * 1-5')
-        pollSCM('58 11 * * 1-5')
+        pollSCM('06 10 * * 1-5')
     }
     parameters {
         // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
