@@ -4,7 +4,7 @@ pipeline {
     agent any
     triggers {
         // cron('*/2 * * * 1-5') //each 2min
-        cron('50 17 * * *') 
+        cron('25 09 * * *') 
     }
     parameters {
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
@@ -21,12 +21,18 @@ pipeline {
                     steps { script {
                     echo "helmfile -e dbh-v1-dev destroy"
                     echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-                     }                    
+                    }                    
                 }
         }
-        stage('Helmfile deployment') { steps {  script {
-            echo "helmfile -e dbh-v1-dev destroy"
-            echo "helmfile -e dbh-v1-dev apply"
+        stage('Helmfile deployment') { 
+            when {
+                    expression {
+                        params.rollAlways == false
+                    }
+                }
+                    steps {  script {
+                    echo "helmfile -e dbh-v1-dev destroy"
+                    echo "helmfile -e dbh-v1-dev apply"
         } } }
     }
     // stages {
