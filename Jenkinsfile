@@ -3,8 +3,8 @@ def gv
 pipeline {
     agent any
     triggers {
-        // cron('*/2 * * * 1-5') //each 2min
-        cron('05 10 * * *') 
+        // cron('*/2 * * * 1-5') //each 2min except weekends
+        cron('H 10-12/1 * * 1-5') 
     }
     parameters {
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
