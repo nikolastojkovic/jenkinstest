@@ -20,10 +20,10 @@ pipeline {
                     params.rollAlways == true
                 }
             }
-            steps { container(name: 'helm') { script {
+            steps {  script {
                 echo "helmfile -e dbh-v1-dev destroy"
                 echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-            }}}
+            }}
         }
         stage('Helmfile deployment') {
             when {
@@ -31,10 +31,10 @@ pipeline {
                     params.rollAlways == false
                 }
             }
-            steps { container(name: 'helm') { script {
+            steps { script {
                 echo "helmfile -e dbh-v1-dev destroy"
                 echo "helmfile -e dbh-v1-dev apply"
-            }}}
+            }}
         }
     }
     // stages {
