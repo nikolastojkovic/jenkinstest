@@ -23,7 +23,7 @@ pipeline {
                     steps { script {
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-                        echo "negde oko 11:58"
+                        echo "negde oko 12:06"
                     }                    
                 }
         }
@@ -34,7 +34,7 @@ pipeline {
                     }
                 }
                     steps {  script {
-                        echo "negde oko 11:58"
+                        echo "negde oko 12:06"
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev apply"
         } } }
