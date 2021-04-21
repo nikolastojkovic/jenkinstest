@@ -4,7 +4,7 @@ pipeline {
     agent any
     triggers {
         // cron('*/2 * * * 1-5') //each 2min
-        cron('25 09 * * *') 
+        cron('40 09 * * *') 
     }
     parameters {
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
