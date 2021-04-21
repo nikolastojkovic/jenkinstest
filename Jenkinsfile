@@ -22,7 +22,7 @@ pipeline {
                     steps { script {
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-                        echo "negde izmedju"
+                        echo "negde izmedju 11:22 i 11:30"
                     }                    
                 }
         }
@@ -33,7 +33,7 @@ pipeline {
                     }
                 }
                     steps {  script {
-                        echo "negde izmedju"
+                        echo "negde izmedju 11:22 i 11:30"
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev apply"
         } } }
