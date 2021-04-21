@@ -19,8 +19,9 @@ pipeline {
                     }
                 }
                     steps { script {
-                    echo "helmfile -e dbh-v1-dev destroy"
-                    echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
+                        echo "helmfile -e dbh-v1-dev destroy"
+                        echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
+                        echo "9:40"
                     }                    
                 }
         }
@@ -31,8 +32,9 @@ pipeline {
                     }
                 }
                     steps {  script {
-                    echo "helmfile -e dbh-v1-dev destroy"
-                    echo "helmfile -e dbh-v1-dev apply"
+                        echo "9:40"
+                        echo "helmfile -e dbh-v1-dev destroy"
+                        echo "helmfile -e dbh-v1-dev apply"
         } } }
     }
     // stages {
