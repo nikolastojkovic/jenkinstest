@@ -3,13 +3,13 @@ def gv
 pipeline {
     agent any
     triggers {
-        // cron('*/2 * * * 1-5') //each 2min except weekends
+        // cron('*/2 * * * 1-5') //each 2min each workday
         cron('H 10-12/1 * * 1-5') 
     }
     parameters {
-        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+        // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         // if true - always pull the latest docker image
-        booleanParam(name: 'rollAlways', defaultValue: false, description: '')
+        booleanParam(name: 'rollAlways', defaultValue: false, description: 'Pull the latest Docker image')
     }
     stages {
         stage("Helmfile deployment rollAlways") {
