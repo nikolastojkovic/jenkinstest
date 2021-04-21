@@ -21,7 +21,7 @@ pipeline {
                     steps { script {
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-                        echo "9:41"
+                        echo "10:50"
                     }                    
                 }
         }
@@ -32,7 +32,7 @@ pipeline {
                     }
                 }
                     steps {  script {
-                        echo "9:41"
+                        echo "10:50"
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev apply"
         } } }
