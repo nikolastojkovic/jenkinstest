@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage("Helmfile deployment rollAlways") {
                 when {
-                    branch 'dev'
+                    branch 'main'
                     expression {
                         params.rollAlways == true
                     }
@@ -24,23 +24,21 @@ pipeline {
                     steps { script {
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-                        echo "negde oko 12:06"
-                        echo env.BRANCH_NAME
+                        echo "branch test"
                     }                    
                 }
         }
         stage('Helmfile deployment') { 
             when {
-                    branch 'dev'
+                    branch 'main'
                     expression {
                         params.rollAlways == false
                     }
                 }
                     steps {  script {
-                        echo "negde oko 12:06"
+                        echo "branch test"
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev apply"
-                        env.BRANCH_NAME
         } } }
     }
     // stages {
