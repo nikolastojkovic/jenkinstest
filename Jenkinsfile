@@ -5,8 +5,8 @@ pipeline {
     triggers {
         // cron('*/2 * * * 1-5') //each 2min each workday
         // cron('H 10-12/1 * * 1-5')
-        // pollSCM('*/2 * * * 1-5')
-        pollSCM('06 10 * * 1-5')
+        pollSCM('*/2 * * * 1-5') // poll every 2min each workday
+        // pollSCM('06 10 * * 1-5') // UTC time
     }
     parameters {
         // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
@@ -16,6 +16,7 @@ pipeline {
     stages {
         stage("Helmfile deployment rollAlways") {
                 when {
+                    branch 'dev'
                     expression {
                         params.rollAlways == true
                     }
@@ -24,11 +25,13 @@ pipeline {
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
                         echo "negde oko 12:06"
+                        echo env.BRANCH_NAME
                     }                    
                 }
         }
         stage('Helmfile deployment') { 
             when {
+                    branch 'dev'
                     expression {
                         params.rollAlways == false
                     }
@@ -37,6 +40,7 @@ pipeline {
                         echo "negde oko 12:06"
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev apply"
+                        env.BRANCH_NAME
         } } }
     }
     // stages {
