@@ -6,7 +6,7 @@ pipeline {
         // cron('*/2 * * * 1-5') //each 2min each workday
         // cron('H 10-12/1 * * 1-5')
         // pollSCM('*/2 * * * 1-5')
-        pollSCM('47 11 * * 1-5')
+        pollSCM('55 11 * * 1-5')
     }
     parameters {
         // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
@@ -23,7 +23,7 @@ pipeline {
                     steps { script {
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-                        echo "negde 11:47"
+                        echo "negde oko 11:47"
                     }                    
                 }
         }
@@ -34,7 +34,7 @@ pipeline {
                     }
                 }
                     steps {  script {
-                        echo "negde izmedju 11:22 i 11:30"
+                        echo "negde oko 11:47"
                         echo "helmfile -e dbh-v1-dev destroy"
                         echo "helmfile -e dbh-v1-dev apply"
         } } }
