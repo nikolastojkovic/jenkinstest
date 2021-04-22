@@ -11,24 +11,24 @@ pipeline {
     parameters {
         // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         // if true - always pull the latest docker image
-        booleanParam(name: 'rollAlways', defaultValue: false, description: 'Pull the latest Docker image')
+        booleanParam(name: 'rollAlways', defaultValue: true, description: 'Pull the latest Docker image')
+        booleanParam(name: 'destroyApply', defaultValue: false, description: 'Helmfile -e dbh-v1-dev destroy & apply')
     }
     stages {
         stage('Helmfile deployment rollAlways') {
             when {
                 expression {
-                    params.rollAlways == true
+                    params.rollAlways == true && params.destroyApply == false
                 }
             }
             steps {  script {
-                echo "helmfile -e dbh-v1-dev destroy"
                 echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
             }}
         }
         stage('Helmfile deployment') {
             when {
                 expression {
-                    params.rollAlways == false
+                    params.rollAlways == false && params.destroyApply == true
                 }
             }
             steps { script {
