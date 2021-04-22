@@ -2,81 +2,90 @@ def gv
 
 pipeline {
     agent any
-    triggers {
-        // cron('*/2 * * * 1-5') //each 2min each workday
-        // cron('H 10-12/1 * * 1-5')
-        pollSCM('*/2 * * * 1-5') // poll every 2min each workday
-        // pollSCM('06 10 * * 1-5') // UTC time
-    }
-    parameters {
-        // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        // if true - always pull the latest docker image
-        booleanParam(name: 'rollAlways', defaultValue: true, description: 'Pull the latest Docker image')
-        booleanParam(name: 'destroyApply', defaultValue: false, description: 'Helmfile -e dbh-v1-dev destroy & apply')
-    }
-    stages {
-        stage('Helmfile deployment rollAlways') {
-            when {
-                expression {
-                    params.rollAlways == true && params.destroyApply == false
+        stages {
+            stage('Parameters'){
+                steps {
+                    script {
+                    properties([
+                            parameters([
+                                [$class: 'ChoiceParameter', 
+                                    choiceType: 'PT_SINGLE_SELECT', 
+                                    description: 'Select the Environemnt from the Dropdown List', 
+                                    filterLength: 1, 
+                                    filterable: false, 
+                                    name: 'Env', 
+                                    script: [
+                                        $class: 'GroovyScript', 
+                                        fallbackScript: [
+                                            classpath: [], 
+                                            sandbox: false, 
+                                            script: 
+                                                "return['Could not get The environemnts']"
+                                        ], 
+                                        script: [
+                                            classpath: [], 
+                                            sandbox: false, 
+                                            script: 
+                                                "return['dev','stage','prod']"
+                                        ]
+                                    ]
+                                ],
+                                [$class: 'CascadeChoiceParameter', 
+                                    choiceType: 'PT_SINGLE_SELECT', 
+                                    description: 'Select the AMI from the Dropdown List',
+                                    name: 'AMI List', 
+                                    referencedParameters: 'Env', 
+                                    script: 
+                                        [$class: 'GroovyScript', 
+                                        fallbackScript: [
+                                                classpath: [], 
+                                                sandbox: false, 
+                                                script: "return['Could not get Environment from Env Param']"
+                                                ], 
+                                        script: [
+                                                classpath: [], 
+                                                sandbox: false, 
+                                                script: '''
+                                                if (Env.equals("dev")){
+                                                    return["ami-sd2345sd", "ami-asdf245sdf", "ami-asdf3245sd"]
+                                                }
+                                                else if(Env.equals("stage")){
+                                                    return["ami-sd34sdf", "ami-sdf345sdc", "ami-sdf34sdf"]
+                                                }
+                                                else if(Env.equals("prod")){
+                                                    return["ami-sdf34sdf", "ami-sdf34ds", "ami-sdf3sf3"]
+                                                }
+                                                '''
+                                            ] 
+                                    ]
+                                ],
+                                [$class: 'DynamicReferenceParameter', 
+                                    choiceType: 'ET_ORDERED_LIST', 
+                                    description: 'Select the  AMI based on the following information', 
+                                    name: 'Image Information', 
+                                    referencedParameters: 'Env', 
+                                    script: 
+                                        [$class: 'GroovyScript', 
+                                        script: 'return["Could not get AMi Information"]', 
+                                        script: [
+                                            script: '''
+                                                    if (Env.equals("dev")){
+                                                        return["ami-sd2345sd:  AMI with Java", "ami-asdf245sdf: AMI with Python", "ami-asdf3245sd: AMI with Groovy"]
+                                                    }
+                                                    else if(Env.equals("stage")){
+                                                        return["ami-sd34sdf:  AMI with Java", "ami-sdf345sdc: AMI with Python", "ami-sdf34sdf: AMI with Groovy"]
+                                                    }
+                                                    else if(Env.equals("prod")){
+                                                        return["ami-sdf34sdf:  AMI with Java", "ami-sdf34ds: AMI with Python", "ami-sdf3sf3: AMI with Groovy"]
+                                                    }
+                                                    '''
+                                                ]
+                                        ]
+                                ]
+                            ])
+                        ])
+                    }
                 }
             }
-            steps {  script {
-                echo "ovaj ide"
-                echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
-            }}
-        }
-        stage('Helmfile deployment') {
-            when {
-                expression {
-                    params.rollAlways == false && params.destroyApply == true
-                }
-            }
-            steps { script {
-                echo "helmfile -e dbh-v1-dev destroy"
-                echo "helmfile -e dbh-v1-dev apply"
-            }}
-        }
-    }
-    // stages {
-    //     stage("init") {
-    //         steps {
-    //             script {
-    //                gv = load "script.groovy" 
-    //             }
-    //         }
-    //     }
-    //     stage("build") {
-    //         steps {
-    //             script {
-    //                 gv.buildApp()
-    //             }
-    //         }
-    //     }
-    //     stage("Helmfile rollAlways") {
-    //         when {
-    //             expression {
-    //                 params.rollAlways == true
-    //             }
-    //         }
-    //         steps {
-    //             script {
-    //                 gv.deployAppAlways()
-    //             }
-    //         }
-    //     }
-    //     stage("Helmfile deployment") {
-    //         when {
-    //             expression {
-    //                 params.rollAlways == false
-    //             }
-    //         }
-    //         steps {
-    //             script {
-    //                 gv.deployApp()
-    //             }
-    //         }
-    //     }
-        
-    // }   
+        }   
 }
