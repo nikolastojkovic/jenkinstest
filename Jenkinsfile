@@ -22,6 +22,7 @@ pipeline {
                 }
             }
             steps {  script {
+                echo "ovaj ide"
                 echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
             }}
         }
