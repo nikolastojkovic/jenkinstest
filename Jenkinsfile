@@ -13,13 +13,13 @@ pipeline {
         booleanParam(name: 'rollAlways', defaultValue: true, description: 'Pull the latest Docker image')
         // booleanParam(name: 'destroy', defaultValue: false, description: 'Helmfile -e dbh-v1-dev destroy')
         // booleanParam(name: 'apply', defaultValue: false, description: 'Helmfile -e dbh-v1-dev apply')
-        choice(name: 'VERSION', choices: ['destroy', 'apply'], description: 'Helmfile -e dbh-v1-dev destroy or apply')
+        choice(name: 'DEPLOYMENT', choices: ['N/A', 'destroy', 'apply'], description: 'Please uncheck the rollAlways if you are using destroy or apply')
     }
     stages {
         stage('Helmfile deployment rollAlways') {
             when {
                 expression {
-                    params.rollAlways == true && params.destroyApply == false
+                    params.rollAlways == true && params.DEPLOYMENT == "N/A"
                 }
             }
             steps {  script {
@@ -27,14 +27,23 @@ pipeline {
                 echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
             }}
         }
-        stage('Helmfile deployment') {
+        stage('Helmfile deployment destroy') {
             when {
                 expression {
-                    params.rollAlways == false && params.destroyApply == true
+                    params.rollAlways == false && params.DEPLOYMENT == "destroy"
                 }
             }
             steps { script {
                 echo "helmfile -e dbh-v1-dev destroy"
+            }}
+        }
+        stage('Helmfile deployment apply') {
+            when {
+                expression {
+                    params.rollAlways == false && params.DEPLOYMENT == "apply"
+                }
+            }
+            steps { script {
                 echo "helmfile -e dbh-v1-dev apply"
             }}
         }
