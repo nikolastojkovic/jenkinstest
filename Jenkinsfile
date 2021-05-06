@@ -3,7 +3,6 @@ def gv
 pipeline {
     agent any
     triggers {
-        // cron('*/2 * * * 1-5') //each 2min each workday
         // cron('H 10-12/1 * * 1-5')
         pollSCM('*/2 * * * 1-5') // poll every 2min each workday
         // pollSCM('06 10 * * 1-5') // UTC time
@@ -12,7 +11,9 @@ pipeline {
         // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         // if true - always pull the latest docker image
         booleanParam(name: 'rollAlways', defaultValue: true, description: 'Pull the latest Docker image')
-        booleanParam(name: 'destroyApply', defaultValue: false, description: 'Helmfile -e dbh-v1-dev destroy & apply')
+        // booleanParam(name: 'destroy', defaultValue: false, description: 'Helmfile -e dbh-v1-dev destroy')
+        // booleanParam(name: 'apply', defaultValue: false, description: 'Helmfile -e dbh-v1-dev apply')
+        choice(name: 'VERSION', choices: ['destroy', 'apply'], description: 'Helmfile -e dbh-v1-dev destroy or apply')
     }
     stages {
         stage('Helmfile deployment rollAlways') {
@@ -38,45 +39,4 @@ pipeline {
             }}
         }
     }
-    // stages {
-    //     stage("init") {
-    //         steps {
-    //             script {
-    //                gv = load "script.groovy" 
-    //             }
-    //         }
-    //     }
-    //     stage("build") {
-    //         steps {
-    //             script {
-    //                 gv.buildApp()
-    //             }
-    //         }
-    //     }
-    //     stage("Helmfile rollAlways") {
-    //         when {
-    //             expression {
-    //                 params.rollAlways == true
-    //             }
-    //         }
-    //         steps {
-    //             script {
-    //                 gv.deployAppAlways()
-    //             }
-    //         }
-    //     }
-    //     stage("Helmfile deployment") {
-    //         when {
-    //             expression {
-    //                 params.rollAlways == false
-    //             }
-    //         }
-    //         steps {
-    //             script {
-    //                 gv.deployApp()
-    //             }
-    //         }
-    //     }
-        
-    // }   
 }
