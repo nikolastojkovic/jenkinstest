@@ -13,14 +13,25 @@ pipeline {
         booleanParam(name: 'rollAlways', defaultValue: true, description: 'Pull the latest Docker image')
         // booleanParam(name: 'destroy', defaultValue: false, description: 'Helmfile -e dbh-v1-dev destroy')
         // booleanParam(name: 'apply', defaultValue: false, description: 'Helmfile -e dbh-v1-dev apply')
-        choice(name: 'applicationName', choices: ['assets', 'audit', 'auditserver', 'authserver-ma', 'authserver-ma-entersekt', 'authserver-ma-res', 'bff', 'brokerage', 'campaign', 'cardmanagement', 'cloud-boot-admin-server', 'clx-payments', 'contracts', 'dbh-nhub', 'digipass', 'estateplanning', 'finhyb', 'identityserver-admin', 'identityserver-oauth', 'identityserver-res', 'instruments', 'investprocess', 'messageintegration-hp', 'messageintegration', 'mockserver', 'nhub-timeline', 'onlineintegration', 'rabbitmq', 'scamanagement', 'users', 'finhyb-gui', 'oauth-gui'], description: 'Application name to redeploy/reinstall')
+        choice(name: 'applicationName', choices: ['All', 'assets', 'audit', 'auditserver', 'authserver-ma', 'authserver-ma-entersekt', 'authserver-ma-res', 'bff', 'brokerage', 'campaign', 'cardmanagement', 'cloud-boot-admin-server', 'clx-payments', 'contracts', 'dbh-nhub', 'digipass', 'estateplanning', 'finhyb', 'identityserver-admin', 'identityserver-oauth', 'identityserver-res', 'instruments', 'investprocess', 'messageintegration-hp', 'messageintegration', 'mockserver', 'nhub-timeline', 'onlineintegration', 'rabbitmq', 'scamanagement', 'users', 'finhyb-gui', 'oauth-gui'], description: 'Application name to redeploy/reinstall')
         choice(name: 'DEPLOYMENT', choices: ['N/A', 'destroy', 'apply'], description: 'Please uncheck the rollAlways if you are using destroy or apply')
     }
     stages {
         stage('Helmfile deployment rollAlways') {
             when {
                 expression {
-                    params.rollAlways == true && params.DEPLOYMENT == "N/A"
+                    params.rollAlways == true && params.DEPLOYMENT == "N/A" && params.applicationName == "All"
+                }
+            }
+            steps {  script {
+                echo "ovaj ide"
+                echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
+            }}
+        }
+        stage('Helmfile deployment rollAlways per application') {
+            when {
+                expression {
+                    params.rollAlways == true && params.DEPLOYMENT == "N/A" && params.applicationName !== "All"
                 }
             }
             steps {  script {
@@ -31,7 +42,7 @@ pipeline {
         stage('Helmfile deployment destroy') {
             when {
                 expression {
-                    params.rollAlways == false && params.DEPLOYMENT == "destroy"
+                    params.rollAlways == false && params.DEPLOYMENT == "destroy" && params.applicationName !== "All"
                 }
             }
             steps { script {
@@ -41,7 +52,7 @@ pipeline {
         stage('Helmfile deployment apply') {
             when {
                 expression {
-                    params.rollAlways == false && params.DEPLOYMENT == "apply"
+                    params.rollAlways == false && params.DEPLOYMENT == "apply" && params.applicationName !== "All"
                 }
             }
             steps { script {
