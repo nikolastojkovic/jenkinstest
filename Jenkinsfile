@@ -25,7 +25,7 @@ pipeline {
             }
             steps {  script {
                 echo "ovaj ide"
-                echo "helmfile -e dbh-v1-dev -l app=${applicationName} --wait --set deployment.rollAlways=true apply"
+                echo "helmfile -e dbh-v1-dev --wait -l app=${applicationName} --set deployment.rollAlways=true apply"
             }}
         }
         stage('Helmfile deployment destroy') {
