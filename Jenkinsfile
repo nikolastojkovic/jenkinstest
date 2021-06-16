@@ -25,7 +25,7 @@ pipeline {
             }
             steps {  script {
                 echo "ovaj ide"
-                echo "helmfile -e dbh-v1-dev --selector app=${applicationName} --wait --set deployment.rollAlways=true apply"
+                echo "helmfile -e dbh-v1-dev -l app=${applicationName} --wait --set deployment.rollAlways=true apply"
             }}
         }
         stage('Helmfile deployment destroy') {
@@ -35,7 +35,7 @@ pipeline {
                 }
             }
             steps { script {
-                echo "helmfile -e dbh-v1-dev --selector app=${applicationName} destroy"
+                echo "helmfile -e dbh-v1-dev -l app=${applicationName} destroy"
             }}
         }
         stage('Helmfile deployment apply') {
@@ -45,7 +45,7 @@ pipeline {
                 }
             }
             steps { script {
-                echo "helmfile -e dbh-v1-dev --selector app=${applicationName} apply"
+                echo "helmfile -e dbh-v1-dev -l app=${applicationName} apply"
             }}
         }
     }
