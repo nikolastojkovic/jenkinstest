@@ -31,7 +31,7 @@ pipeline {
         stage('Helmfile deployment rollAlways per application') {
             when {
                 expression {
-                    params.rollAlways == true && params.DEPLOYMENT == "N/A" && params.applicationName !== "All"
+                    params.rollAlways == true && params.DEPLOYMENT == "N/A" && params.applicationName != "All"
                 }
             }
             steps {  script {
@@ -42,7 +42,7 @@ pipeline {
         stage('Helmfile deployment destroy') {
             when {
                 expression {
-                    params.rollAlways == false && params.DEPLOYMENT == "destroy" && params.applicationName !== "All"
+                    params.rollAlways == false && params.DEPLOYMENT == "destroy" && params.applicationName != "All"
                 }
             }
             steps { script {
@@ -52,7 +52,7 @@ pipeline {
         stage('Helmfile deployment apply') {
             when {
                 expression {
-                    params.rollAlways == false && params.DEPLOYMENT == "apply" && params.applicationName !== "All"
+                    params.rollAlways == false && params.DEPLOYMENT == "apply" && params.applicationName != "All"
                 }
             }
             steps { script {
