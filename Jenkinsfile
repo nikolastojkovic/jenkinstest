@@ -13,6 +13,7 @@ pipeline {
         booleanParam(name: 'rollAlways', defaultValue: true, description: 'Pull the latest Docker image')
         // booleanParam(name: 'destroy', defaultValue: false, description: 'Helmfile -e dbh-v1-dev destroy')
         // booleanParam(name: 'apply', defaultValue: false, description: 'Helmfile -e dbh-v1-dev apply')
+        choice name: 'applicationName', choices: ['assets', 'audit', 'auditserver', 'authserver-ma', 'authserver-ma-entersekt', 'authserver-ma-res', 'bff', 'brokerage', 'campaign', 'cardmanagement', 'cloud-boot-admin-server', 'clx-payments', 'contracts', 'dbh-nhub', 'digipass', 'estateplanning', 'finhyb', 'identityserver-admin', 'identityserver-oauth', 'identityserver-res', 'instruments', 'investprocess', 'messageintegration-hp', 'messageintegration', 'mockserver', 'nhub-timeline', 'onlineintegration', 'rabbitmq', 'scamanagement', 'users', 'finhyb-gui', 'oauth-gui'], description: 'Application name to redeploy/reinstall'
         choice(name: 'DEPLOYMENT', choices: ['N/A', 'destroy', 'apply'], description: 'Please uncheck the rollAlways if you are using destroy or apply')
     }
     stages {
@@ -24,7 +25,7 @@ pipeline {
             }
             steps {  script {
                 echo "ovaj ide"
-                echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true apply"
+                echo "helmfile -e dbh-v1-dev --selector app=${applicationName} --wait --set deployment.rollAlways=true apply"
             }}
         }
         stage('Helmfile deployment destroy') {
@@ -34,7 +35,7 @@ pipeline {
                 }
             }
             steps { script {
-                echo "helmfile -e dbh-v1-dev destroy"
+                echo "helmfile -e dbh-v1-dev --selector app=${applicationName} destroy"
             }}
         }
         stage('Helmfile deployment apply') {
@@ -44,7 +45,7 @@ pipeline {
                 }
             }
             steps { script {
-                echo "helmfile -e dbh-v1-dev apply"
+                echo "helmfile -e dbh-v1-dev --selector app=${applicationName} apply"
             }}
         }
     }
