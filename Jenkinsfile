@@ -25,7 +25,7 @@ pipeline {
             }
             steps {  script {
                 echo "ovaj ide"
-                echo "helmfile -e dbh-v1-dev --wait --set deployment.rollAlways=true ${DEPLOYMENT}"
+                echo "helmfile -e dbh-v1-dev --state-values-set wait=true ${DEPLOYMENT} --set deployment.rollAlways=true"
             }}
         }
         stage('Helmfile deployment rollAlways per application') {
