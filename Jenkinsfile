@@ -17,7 +17,7 @@ pipeline {
         choice(name: 'DEPLOYMENT', choices: ['apply','destroy' ], description: 'Please uncheck the rollAlways if you are using destroy or apply')
     }
     stages {
-        stage('Helmfile deployment rollAlways allApps') {
+        stage('Helmfile deployment rollAlways all applications') {
             when {
                 expression {
                     params.rollAlways == true && params.DEPLOYMENT == "apply" && params.applicationName == "allApps"
@@ -57,6 +57,16 @@ pipeline {
             }
             steps { script {
                 echo "helmfile -e dbh-v1-dev -l app=${applicationName} ${DEPLOYMENT}"
+            }}
+        }
+        stage('Helmfile deployment destroy all applications') {
+            when {
+                expression {
+                    params.rollAlways == false && params.DEPLOYMENT == "destroy" && params.applicationName == "allApps"
+                }
+            }
+            steps { script {
+                echo "helmfile -e dbh-v1-dev ${DEPLOYMENT}"
             }}
         }
     }
