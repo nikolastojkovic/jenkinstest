@@ -6,7 +6,7 @@ pipeline {
     }
     triggers {
         // cron('H H(1-2) * * 3') //some time between 1:00 AM to 2:59 AM server time
-        cron('*/2 * * * *') //some time between 1:00 AM to 2:59 AM server time
+        cron('*/2 * * * 5') //some time between 1:00 AM to 2:59 AM server time
     }
     parameters {
         //if true - pull the latest Docker image
@@ -14,9 +14,6 @@ pipeline {
         choice(name: 'applicationName', choices: ['allApps', 'assets', 'audit', 'auditserver', 'authserver-ma', 'authserver-ma-entersekt', 'authserver-ma-res', 'bff', 'brokerage', 'campaign', 'cardmanagement', 'cloud-boot-admin-server', 'clx-payments', 'contracts', 'digipass', 'estateplanning', 'finhyb', 'identityserver-admin', 'identityserver-oauth', 'identityserver-res', 'instruments', 'investprocess', 'messageintegration', 'onlineintegration', 'rabbitmq', 'scamanagement', 'users', 'finhyb-gui', 'oauth-gui'], description: 'Application name to redeploy/reinstall')
         choice(name: 'DEPLOYMENT', choices: ['apply','destroy'], description: 'Please uncheck the rollAlways when using destroy allApps or destroy per application')
 	  }
-    agent {
-        label 'build_base_pod'
-    }
 
     stages {
         stage('Helmfile deployment rollAlways all applications') {
