@@ -4,17 +4,13 @@ pipeline {
     agent any
     triggers {
         // cron('H 10-12/1 * * 1-5')
-        pollSCM('*/2 * * * 1-5') // poll every 2min each workday
+        cron('40 14 * * 5') // poll every 2min each workday
         // pollSCM('06 10 * * 1-5') // UTC time
     }
     parameters {
-        // choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        // if true - always pull the latest docker image
         booleanParam(name: 'rollAlways', defaultValue: true, description: 'Pull the latest Docker image')
-        // booleanParam(name: 'destroy', defaultValue: false, description: 'Helmfile -e dbh-v1-dev destroy')
-        // booleanParam(name: 'apply', defaultValue: false, description: 'Helmfile -e dbh-v1-dev apply')
-        choice(name: 'applicationName', choices: ['allApps', 'assets', 'audit', 'auditserver', 'authserver-ma', 'authserver-ma-entersekt', 'authserver-ma-res', 'bff', 'brokerage', 'campaign', 'cardmanagement', 'cloud-boot-admin-server', 'clx-payments', 'contracts', 'dbh-nhub', 'digipass', 'estateplanning', 'finhyb', 'identityserver-admin', 'identityserver-oauth', 'identityserver-res', 'instruments', 'investprocess', 'messageintegration-hp', 'messageintegration', 'mockserver', 'nhub-timeline', 'onlineintegration', 'rabbitmq', 'scamanagement', 'users', 'finhyb-gui', 'oauth-gui'], description: 'Application name to redeploy/reinstall')
-        choice(name: 'DEPLOYMENT', choices: ['apply','destroy' ], description: 'Please uncheck the rollAlways if you are using destroy or apply')
+        choice(name: 'applicationName', choices: ['allApps', 'assets', 'audit', 'auditserver', 'authserver-ma', 'authserver-ma-entersekt', 'authserver-ma-res', 'bff', 'brokerage', 'campaign', 'cardmanagement', 'cloud-boot-admin-server', 'clx-payments', 'contracts', 'digipass', 'estateplanning', 'finhyb', 'identityserver-admin', 'identityserver-oauth', 'identityserver-res', 'instruments', 'investprocess', 'messageintegration', 'onlineintegration', 'rabbitmq', 'scamanagement', 'users', 'finhyb-gui', 'oauth-gui'], description: 'Application name to redeploy/reinstall')
+        choice(name: 'DEPLOYMENT', choices: ['apply','destroy'], description: 'Please uncheck the rollAlways when using destroy allApps or destroy per application')
     }
     stages {
         stage('Helmfile deployment rollAlways all applications') {
@@ -25,7 +21,7 @@ pipeline {
             }
             steps {  script {
                 echo "ovaj ide"
-                echo "helmfile -e dbh-v1-dev --state-values-set wait=true ${DEPLOYMENT} --set deployment.rollAlways=true"
+                echo "helmfile -e dbh-v1-qa --state-values-set wait=true ${DEPLOYMENT} --set deployment.rollAlways=true"
             }}
         }
         stage('Helmfile deployment rollAlways per application') {
@@ -36,8 +32,7 @@ pipeline {
             }
             steps {  script {
                 echo "ovaj ide"
-                echo "helmfile -e dbh-v1-dev --wait -l app=${applicationName} --set deployment.rollAlways=true ${DEPLOYMENT}"
-                echo "helmfile -e dbh-v1-dev --state-values-set wait=true -l app=${applicationName} ${DEPLOYMENT} --set deployment.rollAlways=true"
+                echo "helmfile -e dbh-v1-qa --state-values-set wait=true -l app=${applicationName} ${DEPLOYMENT} --set deployment.rollAlways=true"
             }}
         }
         stage('Helmfile deployment destroy per application') {
@@ -47,7 +42,7 @@ pipeline {
                 }
             }
             steps { script {
-                echo "helmfile -e dbh-v1-dev -l app=${applicationName} ${DEPLOYMENT}"
+                echo "helmfile -e dbh-v1-qa -l app=${applicationName} ${DEPLOYMENT}"
             }}
         }
         stage('Helmfile deployment apply per application') {
@@ -57,7 +52,7 @@ pipeline {
                 }
             }
             steps { script {
-                echo "helmfile -e dbh-v1-dev -l app=${applicationName} ${DEPLOYMENT}"
+                echo "helmfile -e dbh-v1-qa -l app=${applicationName} ${DEPLOYMENT}"
             }}
         }
         stage('Helmfile deployment destroy all applications') {
@@ -67,7 +62,7 @@ pipeline {
                 }
             }
             steps { script {
-                echo "helmfile -e dbh-v1-dev ${DEPLOYMENT}"
+                echo "helmfile -e dbh-v1-qa ${DEPLOYMENT}"
             }}
         }
     }
