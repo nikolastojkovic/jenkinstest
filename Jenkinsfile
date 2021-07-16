@@ -14,7 +14,6 @@ pipeline {
         choice(name: 'applicationName', choices: ['allApps', 'assets', 'audit', 'auditserver', 'authserver-ma', 'authserver-ma-entersekt', 'authserver-ma-res', 'bff', 'brokerage', 'campaign', 'cardmanagement', 'cloud-boot-admin-server', 'clx-payments', 'contracts', 'digipass', 'estateplanning', 'finhyb', 'identityserver-admin', 'identityserver-oauth', 'identityserver-res', 'instruments', 'investprocess', 'messageintegration', 'onlineintegration', 'rabbitmq', 'scamanagement', 'users', 'finhyb-gui', 'oauth-gui'], description: 'Application name to redeploy/reinstall')
         choice(name: 'DEPLOYMENT', choices: ['apply','destroy'], description: 'Please uncheck the rollAlways when using destroy allApps or destroy per application')
 	  }
-
     stages {
         stage('Helmfile deployment rollAlways all applications') {
             when {
