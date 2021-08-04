@@ -33,7 +33,7 @@ pipeline {
             }
             steps {  script {
                 echo "ovaj ide"
-                echo "helmfile -e dbh-v1-qa --state-values-set wait=true --timeout ${TIMEOUT} -l app=${applicationName} ${DEPLOYMENT} --set deployment.rollAlways=true"
+                echo "helmfile -e dbh-v1-qa --state-values-set wait=true --state-values-set timeout=${TIMEOUT} -l app=${applicationName} ${DEPLOYMENT} --set deployment.rollAlways=true"
             }}
         }
         stage('Deployment rollAlways sync per application') {
