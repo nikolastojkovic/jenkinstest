@@ -5,7 +5,7 @@ pipeline {
     triggers {
         // cron('H 10-12/1 * * 1-5')
         // cron('40 14 * * 5') // poll every 2min each workday
-        pollSCM('*/2 * * * 1-5') // poll every 2min each workday
+        pollSCM('*/1 * * * 1-5') // poll every 2min each workday
         // pollSCM('06 10 * * 1-5') // UTC time
     }
     parameters {
