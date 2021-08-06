@@ -119,7 +119,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying users ${users}"
-                    sh "kubectl create deployment --image=docker.artifactory.devops.crealogix.com/testdataimporter:latest testdataimporter_users"
+                    sh "kubectl create deployment --image=docker.artifactory.devops.crealogix.com/testdataimporter:latest testdataimporter"
                 }
             }
         }
