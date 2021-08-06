@@ -3,8 +3,9 @@ def gv
 pipeline {
     agent any
     parameters {
-        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+        booleanParam(defaultValue: false, name: 'ALL', description: 'Process all'),
+        booleanParam(defaultValue: false, name: 'OPTION_1', description: 'Process option 1'),
+        booleanParam(defaultValue: false, name: 'OPTION_2', description: 'Process options 2'),
     }
     stages {
         stage("init") {
@@ -15,6 +16,11 @@ pipeline {
             }
         }
         stage("build") {
+            when {
+                expression {
+                    params.OPTION_1
+                }
+            }
             steps {
                 script {
                     gv.buildApp()
@@ -24,7 +30,7 @@ pipeline {
         stage("test") {
             when {
                 expression {
-                    params.executeTests
+                    params.OPTION_2
                 }
             }
             steps {
@@ -34,6 +40,11 @@ pipeline {
             }
         }
         stage("deploy") {
+            when {
+                expression {
+                    params.ALL
+                }
+            }
             steps {
                 script {
                     gv.deployApp()
