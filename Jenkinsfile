@@ -17,7 +17,7 @@ pipeline {
         stage("all") {
             when {
                 expression {
-                    params.all
+                    params.all == true
                 }
             }
             steps {
@@ -29,7 +29,7 @@ pipeline {
         stage("assets") {
             when {
                 expression {
-                    params.assets
+                    params.assets == true
                 }
             }
             steps {
@@ -41,7 +41,7 @@ pipeline {
         stage("audit") {
             when {
                 expression {
-                    params.audit
+                    params.audit == true
                 }
             }
             steps {
@@ -53,7 +53,7 @@ pipeline {
         stage("contracts") {
             when {
                 expression {
-                    params.contracts
+                    params.contracts == true
                 }
             }
             steps {
@@ -65,7 +65,7 @@ pipeline {
         stage("identityserver-oauth") {
             when {
                 expression {
-                    params.identityserver-oauth
+                    params.identityserver-oauth == true
                 }
             }
             steps {
@@ -77,7 +77,7 @@ pipeline {
         stage("nhub") {
             when {
                 expression {
-                    params.nhub
+                    params.nhub == true
                 }
             }
             steps {
@@ -89,7 +89,7 @@ pipeline {
         stage("payments") {
             when {
                 expression {
-                    params.payments
+                    params.payments == true
                 }
             }
             steps {
@@ -101,7 +101,7 @@ pipeline {
         stage("timeline") {
             when {
                 expression {
-                    params.timeline
+                    params.timeline == true
                 }
             }
             steps {
@@ -113,7 +113,7 @@ pipeline {
         stage("users") {
             when {
                 expression {
-                    params.users
+                    params.users == true
                 }
             }
             steps {
