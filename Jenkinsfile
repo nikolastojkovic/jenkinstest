@@ -4,8 +4,8 @@ pipeline {
     agent any
     parameters {
         booleanParam(defaultValue: true, name: 'ALL', description: 'Process all')
-        booleanParam(defaultValue: false, name: 'assets', description: 'Process assets')
         booleanParam(defaultValue: false, name: 'audit', description: 'Process audit')
+        booleanParam(defaultValue: false, name: 'assets', description: 'Process assets')        
         booleanParam(defaultValue: false, name: 'contracts', description: 'Process contracts')        
         booleanParam(defaultValue: false, name: 'identityserver-oauth', description: 'Process identityserver-oauth')
         booleanParam(defaultValue: false, name: 'nhub', description: 'Process ')
@@ -26,18 +26,6 @@ pipeline {
                 }
             }
         }
-        stage("assets") {
-            when {
-                expression {
-                    params.assets == true
-                }
-            }
-            steps {
-                script {
-                    echo "deploying assets ${assets}"
-                }
-            }
-        }
         stage("audit") {
             when {
                 expression {
@@ -47,6 +35,18 @@ pipeline {
             steps {
                 script {
                     echo "deploying audit ${audit}"
+                }
+            }
+        }
+        stage("assets") {
+            when {
+                expression {
+                    params.assets == true
+                }
+            }
+            steps {
+                script {
+                    echo "deploying assets ${assets}"
                 }
             }
         }
@@ -119,6 +119,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying users ${users}"
+                    sh "kubectl create deployment --image=docker.artifactory.devops.crealogix.com/testdataimporter:latest testdataimporter_users"
                 }
             }
         }
