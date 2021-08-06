@@ -22,7 +22,7 @@ pipeline {
             }
             steps {
                 script {
-                   echo "deploying all ${params.all}" 
+                   echo "deploying all ${all}" 
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "deploying assets ${params.assets}"
+                    echo "deploying assets ${assets}"
                 }
             }
         }
@@ -46,7 +46,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "deploying audit ${params.audit}"
+                    echo "deploying audit ${audit}"
                 }
             }
         }
@@ -58,7 +58,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "deploying contracts ${params.contracts}"
+                    echo "deploying contracts ${contracts}"
                 }
             }
         }
@@ -70,7 +70,7 @@ pipeline {
             }
             steps {
                 script {
-                   echo "deploying identityserver-oauth ${params.identityserver-oauth}" 
+                   echo "deploying identityserver-oauth ${identityserver-oauth}" 
                 }
             }
         }
@@ -82,7 +82,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "deploying nhub ${params.nhub}"
+                    echo "deploying nhub ${nhub}"
                 }
             }
         }
@@ -94,7 +94,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "deploying payments ${params.payments}"
+                    echo "deploying payments ${payments}"
                 }
             }
         }
@@ -106,7 +106,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "deploying timeline ${params.timeline}"
+                    echo "deploying timeline ${timeline}"
                 }
             }
         }
@@ -118,7 +118,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "deploying users ${params.users}"
+                    echo "deploying users ${users}"
                 }
             }
         }
