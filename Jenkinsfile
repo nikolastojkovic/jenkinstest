@@ -3,7 +3,7 @@
 pipeline {
     agent any
     parameters {
-        booleanParam(defaultValue: false, name: 'ALL', description: 'Process all')
+        booleanParam(defaultValue: true, name: 'ALL', description: 'Process all')
         booleanParam(defaultValue: false, name: 'assets', description: 'Process assets')
         booleanParam(defaultValue: false, name: 'audit', description: 'Process audit')
         booleanParam(defaultValue: false, name: 'contracts', description: 'Process contracts')        
