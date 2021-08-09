@@ -7,7 +7,7 @@ pipeline {
         booleanParam(defaultValue: false, name: 'audit', description: 'Process audit')
         booleanParam(defaultValue: false, name: 'assets', description: 'Process assets')        
         booleanParam(defaultValue: false, name: 'contracts', description: 'Process contracts')        
-        booleanParam(defaultValue: false, name: 'identityserver-oauth', description: 'Process identityserver-oauth')
+        booleanParam(defaultValue: false, name: 'identityserveroauth', description: 'Process identityserver-oauth')
         booleanParam(defaultValue: false, name: 'nhub', description: 'Process ')
         booleanParam(defaultValue: false, name: 'payments', description: 'Process payments')
         booleanParam(defaultValue: false, name: 'timeline', description: 'Process timeline')
@@ -65,12 +65,12 @@ pipeline {
         stage("identityserver-oauth") {
             when {
                 expression {
-                    params.identityserver-oauth == true
+                    params.identityserveroauth == true
                 }
             }
             steps {
                 script {
-                   echo "deploying identityserver-oauth ${identityserver-oauth}" 
+                   echo "deploying identityserver-oauth ${identityserveroauth}" 
                 }
             }
         }
