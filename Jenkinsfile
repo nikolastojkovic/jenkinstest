@@ -3,15 +3,15 @@ def gv
 pipeline {
     agent any
     parameters {
-        booleanParam(defaultValue: true, name: 'ALL', description: 'Process all')
-        booleanParam(defaultValue: false, name: 'audit', description: 'Process audit')
-        booleanParam(defaultValue: false, name: 'assets', description: 'Process assets')        
-        booleanParam(defaultValue: false, name: 'contracts', description: 'Process contracts')        
-        booleanParam(defaultValue: false, name: 'identityserveroauth', description: 'Process identityserver-oauth')
-        booleanParam(defaultValue: false, name: 'nhub', description: 'Process ')
-        booleanParam(defaultValue: false, name: 'payments', description: 'Process payments')
-        booleanParam(defaultValue: false, name: 'timeline', description: 'Process timeline')
-        booleanParam(defaultValue: false, name: 'users', description: 'Process users')
+        booleanParam(defaultValue: true, name: 'ALL', description: 'Testdata for all')
+        booleanParam(defaultValue: false, name: 'AUDIT', description: 'Testdata for audit')
+        booleanParam(defaultValue: false, name: 'APHM', description: 'Testdata for assets')        
+        booleanParam(defaultValue: false, name: 'CONT', description: 'Testdata for contracts')        
+        booleanParam(defaultValue: false, name: 'OAUTH', description: 'Testdata for identityserver-oauth')
+        booleanParam(defaultValue: false, name: 'NOHM', description: 'Testdata for nhub ')
+        booleanParam(defaultValue: false, name: 'PHM', description: 'Testdata for payments')
+        booleanParam(defaultValue: false, name: 'NOTI', description: 'Testdata for timeline')
+        booleanParam(defaultValue: false, name: 'UHM', description: 'Testdata for users')
     }
     stages {
         stage("all") {
@@ -29,99 +29,106 @@ pipeline {
         stage("audit") {
             when {
                 expression {
-                    params.audit == true
+                    params.AUDIT == true
                 }
             }
             steps {
                 script {
-                    echo "deploying audit ${audit}"
+                    echo "deploying audit ${AUDIT}"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${AUDIT}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${AUDIT}'"
                 }
             }
         }
         stage("assets") {
             when {
                 expression {
-                    params.assets == true
+                    params.APHM == true
                 }
             }
             steps {
                 script {
-                    echo "deploying assets ${assets}"
+                    echo "deploying assets ${APHM}"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${APHM}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${APHM}'"
                 }
             }
         }
         stage("contracts") {
             when {
                 expression {
-                    params.contracts == true
+                    params.CONT == true
                 }
             }
             steps {
                 script {
-                    echo "deploying contracts ${contracts}"
+                    echo "deploying contracts ${CONT}"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${CONT}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${CONT}'"
                 }
             }
         }
         stage("identityserver-oauth") {
             when {
                 expression {
-                    params.identityserveroauth == true
+                    params.OAUTH == true
                 }
             }
             steps {
                 script {
-                   echo "deploying identityserver-oauth ${identityserveroauth}" 
+                   echo "deploying identityserver-oauth ${OAUTH}"
+                   echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${OAUTH}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${OAUTH}'"
                 }
             }
         }
         stage("nhub") {
             when {
                 expression {
-                    params.nhub == true
+                    params.NOHM == true
                 }
             }
             steps {
                 script {
-                    echo "deploying nhub ${nhub}"
+                    echo "deploying nhub ${NOHM}"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${NOHM}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${NOHM}'"
                 }
             }
         }
         stage("payments") {
             when {
                 expression {
-                    params.payments == true
+                    params.PHM == true
                 }
             }
             steps {
                 script {
-                    echo "deploying payments ${payments}"
+                    echo "deploying payments ${PHM}"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${PHM}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${PHM}'"
                 }
             }
         }
         stage("timeline") {
             when {
                 expression {
-                    params.timeline == true
+                    params.NOTI == true
                 }
             }
             steps {
                 script {
-                    echo "deploying timeline ${timeline}"
+                    echo "deploying timeline ${NOTI}"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${NOTI}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${NOTI}'"
                 }
             }
         }
         stage("users") {
             when {
                 expression {
-                    params.users == true
+                    params.UHM == true
                 }
             }
             steps {
                 script {
-                    echo "deploying users ${users}"
-                    sh "kubectl create deployment --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest testdataimporter"
+                    echo "deploying users ${UHM}"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${UHM}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${UHM}'"
                 }
             }
         }
-    }   
+    }
 }
