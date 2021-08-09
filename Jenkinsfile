@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying audit ${AUDIT}"
-                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${AUDIT}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${AUDIT}'"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-audit' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=AUDIT'"
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying assets ${APHM}"
-                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${APHM}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${APHM}'"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-assets' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=APHM'"
                 }
             }
         }
@@ -61,7 +61,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying contracts ${CONT}"
-                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${CONT}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${CONT}'"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-contracts' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=CONT'"
                 }
             }
         }
@@ -74,7 +74,7 @@ pipeline {
             steps {
                 script {
                    echo "deploying identityserver-oauth ${OAUTH}"
-                   echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${OAUTH}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${OAUTH}'"
+                   echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-aso' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=OAUTH'"
                 }
             }
         }
@@ -87,7 +87,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying nhub ${NOHM}"
-                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${NOHM}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${NOHM}'"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-nhub' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=NOHM'"
                 }
             }
         }
@@ -100,7 +100,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying payments ${PHM}"
-                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${PHM}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${PHM}'"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-payments' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=PHM'"
                 }
             }
         }
@@ -113,7 +113,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying timeline ${NOTI}"
-                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${NOTI}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${NOTI}'"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-timeline' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=NOTI'"
                 }
             }
         }
@@ -126,7 +126,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying users ${UHM}"
-                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-${UHM}' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=${UHM}'"
+                    echo "kubectl run testdataimporter --image=docker-develop.artifactory.devops.crealogix.com/testdataimporter:latest --env='DRIVER=org.mariadb.jdbc.Driver' --env='URL=jdbc:mariadb://c20-k8s-db-01.crealogix.net:3306/dbh-v1-qa-users' --env='USERNAME=dbh-v1-qa' --env='PASSWORD=crealogix' --env='HM=UHM'"
                 }
             }
         }
